@@ -12,6 +12,7 @@ func initializeRouter() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/solve", Solve).Methods("POST")
+	r.HandleFunc("/", Welcome).Methods("GET")
 
 	port := os.Getenv("PORT")
 

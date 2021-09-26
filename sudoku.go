@@ -9,6 +9,12 @@ type Sudoku struct{
 	Puzzle [][]int `json:"puzzle"`
 }
 
+func Welcome(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	str := `To use this app you have to make a POST request to https://sudoku-solver-golang.herokuapp.com/solve with data in the body.`
+	json.NewEncoder(w).Encode(str)
+}
+
 func Solve(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var sudoku Sudoku
