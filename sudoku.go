@@ -6,7 +6,7 @@ import (
 )
 
 type Sudoku struct{
-	Puzzle [][]string `json:"puzzle"`
+	Puzzle [][]int `json:"puzzle"`
 }
 
 func Solve(w http.ResponseWriter, r *http.Request) {
@@ -27,11 +27,11 @@ func helper(sudoku Sudoku, row int, col int) bool {
 		return helper(sudoku, row+1, 0)
 	}
 
-	if sudoku.Puzzle[row][col]!="." {
+	if sudoku.Puzzle[row][col]!=0 {
 		return helper(sudoku, row, col+1)
 	}
 
-	temp := []string{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+	temp := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
 
 	for i:=0; i<len(temp); i++ {
 		if !present(sudoku, row, col, temp[i]) {
@@ -39,13 +39,13 @@ func helper(sudoku Sudoku, row int, col int) bool {
 			if helper(sudoku, row, col+1){
 				return true
 			}
-			sudoku.Puzzle[row][col] = "."
+			sudoku.Puzzle[row][col] = 0
 		}
 	}
 	return false
 }
 
-func present(sudoku Sudoku, row int, col int, ch string) bool{
+func present(sudoku Sudoku, row int, col int, ch int) bool{
 	for i:=0; i<9; i++ {
 		if sudoku.Puzzle[i][col]==ch {
 			return true
